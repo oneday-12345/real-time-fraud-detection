@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fraud.detection.mapper.PolicyMapper">
+
+    <!-- <select id="queryGroupPolicyByGroupId"  resultType="com.fraud.detection.entity.GroupPolicy">
+        SELECT g_id                                 AS         groupId ,
+               g_name                               AS         groupName ,
+               g_desc                               AS         groupDesc ,
+               g_creator                            AS         groupCreator ,
+               g_create_at                          AS         groupCreateAt ,
+               p_id                                 AS         policyId ,
+               p_name                               AS         policyName ,
+               p_desc                               AS         policyDesc ,
+               p_dynamic_content                    AS         policyDynamicContent ,
+               p_creator                            AS         policyCreator ,
+               p_create_at                          AS         policyCreateAt
+        FROM t_group_policy 
+        LEFT JOIN t_group ON t_group_policy.gp_group_id = t_group.g_id
+        LEFT JOIN t_policy ON t_group_policy.gp_policy_id = t_policy.p_id
+        WHERE gp_group_id = #{groupId}
+        ORDER BY gp_order ASC
+    </select> -->
+
+</mapper>

@@ -1,0 +1,76 @@
+stages:
+  - compile
+  - test
+  - package
+  - deploy
+
+variables:
+  DOCKER_IMAGE: "xxxxxxxx:${CI_COMMIT_SHORT_SHA}"
+  DOCKER_USERNAME: "username"
+  DOCKER_PASSWORD: "password"
+  VERSION: "version"
+
+compile:
+  stage: compile
+  tags:
+    - "real-time-fraud-detect"
+  image: openjdk:17-slim-bullseye
+  cache:
+    key: "maven-cache"
+    paths:
+      - .m2/repository
+  script:
+    - echo "Compile, waiting..."
+    - mkdir -p .m2/repository
+    - mvn clean compile
+  artifacts:
+    paths:
+      - target/
+
+test:
+  stage: test
+  tags:
+    - "real-time-fraud-detect"
+  image: openjdk:17-slim-bullseye
+  cache:
+    key: "maven-cache"
+    paths:
+      - .m2/repository
+  script:
+    - echo "Test, waiting..."
+    - mkdir -p .m2/repository
+    - mvn test
+  dependencies:
+    - compile
+
+package:
+  stage: package
+  tags:
+    - "real-time-fraud-detect"
+  image: openjdk:17-slim-bullseye
+  cache:
+    key: "maven-cache"
+    paths:
+      - .m2/repository
+  script:
+    - echo "Package, waiting..."
+    - mkdir -p .m2/repository
+    - mvn package
+  artifacts:
+    paths:
+      - target/front-api-$VERSION-SNAPSHOT.jar.jar
+  dependencies:
+    - compile
+    - test
+
+deploy:
+  stage: deploy
+  tags:
+    - "real-time-fraud-detect"
+  script:
+    - echo "Deploy, waiting..."
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
+  dependencies:
+    - package
