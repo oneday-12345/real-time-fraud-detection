@@ -40,3 +40,5 @@ source path/to/sql/init.sql
 
 # Other details
 See [docs](./docs/)
+
+# [E-mail](mailto:oneday_12345@163.com)
